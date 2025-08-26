@@ -1,0 +1,162 @@
+/* ==== Global body styling ==== */
+body {
+  margin: 0;
+  background-color: #1e1e1e !important;
+  color: #fff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ==== Main Page Styling ==== */
+.movie-details-dark {
+  padding: 100px 40px 40px; /* عشان تنزل تحت الـ navbar */
+  background-color: #1e1e1e;
+}
+
+/* ==== Movie Header ==== */
+.movie-header-dark {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+}
+
+.poster-img {
+  width: 300px;
+  border-radius: 10px;
+}
+
+.info-container {
+  flex: 1;
+}
+
+.movie-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0;
+  color: yellow;
+}
+
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.watchlist-btn {
+  font-size: 22px;
+  background: none;
+  border: none;
+  color: #fdd835;
+  cursor: pointer;
+}
+
+.release-rating {
+  font-size: 14px;
+  color: #ccc;
+  margin: 10px 0;
+}
+
+.overview {
+  line-height: 1.6;
+  color: #eee;
+  margin: 15px 0;
+}
+
+.genres .tag {
+  display: inline-block;
+  background-color: #fdd835;
+  color: #000;
+  border-radius: 20px;
+  padding: 5px 12px;
+  margin-right: 8px;
+  font-size: 13px;
+}
+
+.extra {
+  color: #bbb;
+  margin-top: 10px;
+}
+
+.production-logos {
+  margin-top: 10px;
+}
+
+.company-logo {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.website-link {
+  display: inline-block;
+  margin-top: 15px;
+  background-color: #fdd835;
+  color: #000;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* ==== Recommendations Section ==== */
+.recommendations-section-dark {
+  margin-top: 40px;
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.recommendations-section-dark h2 {
+  color: #fdd835;
+  margin-bottom: 15px;
+}
+
+/* ✅ استخدم Grid لتوزيع الاقتراحات تلقائيًا بعرض الشاشة */
+.recommendation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.rec-card-dark {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.rec-card-dark:hover {
+  transform: translateY(-5px);
+}
+
+.rec-card-dark img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.rec-card-dark a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.rec-info {
+  padding: 10px;
+}
+
+.rec-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  margin: 0 0 5px;
+}
+
+.rec-vote {
+  font-size: 13px;
+  color: #fdd835;
+  margin: 0;
+}

@@ -90,15 +90,6 @@
     "poster": "http://localhost:5003/Images/The Shawshank Redemption.jpg"
   },
   {
-    "tconst": "tt0011",
-    "title": "Pulp Fiction",
-    "year": 1994,
-    "genre": "Crime",
-    "director": "Quentin Tarantino",
-    "rating": 8.9,
-    "poster": "http://localhost:5003/Images/TPulp Fiction.jpg"
-  },
-  {
     "tconst": "tt0012",
     "title": "Me Before You",
     "year": 2016,
@@ -114,7 +105,7 @@
     "genre": "Action",
     "director": "Anthony Russo, Joe Russo",
     "rating": 8.4,
-    "poster": "http://localhost:5003/Images/Avengers: Endgame.jpg"
+    "poster": "http://localhost:5003/Images/compose.webp"
   },
   {
     "tconst": "tt0014",
@@ -123,7 +114,7 @@
     "genre": "Action",
     "director": "Ridley Scott",
     "rating": 8.5,
-    "poster": "http://localhost:5003/Images/Gladiator.jpg"
+    "poster": "http://localhost:5003/Images/Gladiator.jpeg"
   },
   {
     "tconst": "tt0015",
@@ -141,7 +132,7 @@
     "genre": "Crime",
     "director": "Martin Scorsese",
     "rating": 8.7,
-    "poster": "http://localhost:5003/Images/Goodfellas.jpg"
+    "poster": "http://localhost:5003/Images/Goodfellas.jpeg"
   },
   {
     "tconst": "tt0017",
@@ -150,7 +141,7 @@
     "genre": "Thriller",
     "director": "David Fincher",
     "rating": 8.6,
-    "poster": "http://localhost:5003/Images/The Se7en.jpg"
+    "poster": "http://localhost:5003/Images/Se7en.jpg"
   },
   {
     "tconst": "tt0018",
@@ -159,7 +150,7 @@
     "genre": "Thriller",
     "director": "Jonathan Demme",
     "rating": 8.6,
-    "poster": "http://localhost:5003/Images/The Silence of the Lambs.jpg"
+    "poster": "http://localhost:5003/Images/The Silence of the Lambs.jpeg"
   },
   {
     "tconst": "tt0019",
@@ -168,7 +159,7 @@
     "genre": "War",
     "director": "Steven Spielberg",
     "rating": 8.6,
-    "poster": "http://localhost:5003/Images/Saving Private Ryan.jpg"
+    "poster": "http://localhost:5003/Images/Saving Private Ryan.jpeg"
   },
   {
     "tconst": "tt0020",
@@ -267,6 +258,6 @@
     "genre": "Crime",
     "director": "Todd Phillips",
     "rating": 8.4,
-    "poster": "http://localhost:5003/Images/Joker.jpg"
+    "poster": "http://localhost:5003/Images/joker.webp"
   }
 ]

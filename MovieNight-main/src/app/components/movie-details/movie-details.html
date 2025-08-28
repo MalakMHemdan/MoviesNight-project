@@ -1,40 +1,36 @@
 <div class="movie-details-container mt-48 mb-0" [hidden]="loading || !movie">
   <div class="movie-header ">
     <div class="poster-section ">
-      <img 
-        [src]="movie?.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://via.placeholder.com/500x750/1a1a1a/fbbf24?text=No+Image'" 
-        [alt]="movie?.title" 
-        class="movie-poster" 
+      <img
+        [src]="movie?.poster ? 'http://localhost:5003/Images/' + movie.poster : 'https://via.placeholder.com/500x750/1a1a1a/fbbf24?text=No+Image'"
+        [alt]="movie?.title?.primary"
+        class="movie-poster"
         (error)="onImgError($event)">
     </div>
-    
+
     <div class="movie-info">
-      <h1 class="movie-title">{{ movie?.title }}</h1>
-      @if (movie?.tagline) {
-        <p class="tagline">{{ movie.tagline }}</p>
-      }
-      
+      <h1 class="movie-title">{{ movie?.title?.primary }}</h1>
+
       <div class="movie-meta">
-        <span class="rating">⭐ {{ movie?.vote_average }}/10</span>
-        @if (movie?.runtime) {
-          <span class="runtime">{{ getRuntimeFormatted() }}</span>
-        }
-        <span class="release-date">{{ movie?.release_date | date:'yyyy' }}</span>
+        <span class="rating">⭐ {{ movie?.rating?.percent || 0 }}</span>
+        <span class="release-date">{{ movie?.year?.start }}</span>
       </div>
-      
+
       @if (movie?.genres?.length) {
         <div class="genres">
-          @for (genre of movie.genres; track genre.id) {
-            <span class="genre-tag">{{ genre.name }}</span>
+          @for (genre of movie.genres; track genre) {
+            <span class="genre-tag">{{ genre }}</span>
           }
         </div>
       }
-      
-      <div class="overview">
-        <h3>Overview</h3>
-        <p>{{ movie?.overview }}</p>
-      </div>
-      
+
+      @if (movie?.crew?.directors?.length) {
+        <div class="director-info">
+          <h3>Director</h3>
+          <p>{{ movie.crew.directors[0].name }}</p>
+        </div>
+      }
+
       <div class="actions">
         <button class="wishlist-btn" (click)="movie && toggleWishlist(movie)" [class.active]="movie && isWishlisted(movie)">
           <i [ngClass]="movie && isWishlisted(movie) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
@@ -47,17 +43,17 @@
   <div class="recommendations-section">
     <h2>Recommendations</h2>
     <div class="recommendations-grid">
-      @for (rec of recommendations; track rec.id) {
-        <div class="recommendation-card" (click)="rec && goToMovieDetails(rec.id)">
+      @for (rec of recommendations; track rec.tconst) {
+        <div class="recommendation-card" (click)="rec && goToMovieDetails(rec.tconst)">
           <div class="rec-poster">
-            <img 
-              [src]="rec?.poster_path ? 'https://image.tmdb.org/t/p/w300' + rec.poster_path : 'https://via.placeholder.com/300x450/1a1a1a/fbbf24?text=No+Image'" 
-              [alt]="rec?.title" 
-              (error)="onImgError($event)">
+            <img
+              [src]="rec?.poster ? 'http://localhost:5003/Images/' + rec.poster : 'https://via.placeholder.com/300x450/1a1a1a/fbbf24?text=No+Image'"
+              [alt]="rec?.title?.primary"
+              (error)="onImgError($event, 'rec')">
           </div>
           <div class="rec-info">
-            <h4>{{ rec?.title }}</h4>
-            <span class="rec-rating">⭐ {{ rec?.vote_average }}/10</span>
+            <h4>{{ rec?.title?.primary }}</h4>
+            <span class="rec-rating">⭐ {{ rec?.rating?.percent || 0 }}/100</span>
           </div>
         </div>
       }

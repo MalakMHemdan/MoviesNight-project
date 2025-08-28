@@ -30,33 +30,29 @@ export class TrendifyComponent implements OnInit {
   }
 
   loadTrendingMovies(page: number = this.page) {
-    const firstPage = Math.ceil(page * 2 - 1);
-    const secondPage = firstPage + 1;
-
-    Promise.all([
-      firstValueFrom(this.movieService.getTrendingMovies(firstPage)),
-      firstValueFrom(this.movieService.getTrendingMovies(secondPage))
-    ])
-      .then(([firstData, secondData]) => {
-        const firstResults = firstData?.results || [];
-        const secondResults = secondData?.results || [];
-        this.movies = [...firstResults, ...secondResults];
-        this.totalPages = Math.max(1, Math.ceil((firstData?.total_pages || 1) / 2));
+    this.movieService.getTrendingMovies(page).subscribe({
+      next: (data) => {
+        this.movies = data?.items || [];
+        this.totalPages = data?.totalPages || 1;
         this.page = page;
-      })
-      .catch((error) => {
+      },
+      error: (error) => {
         console.error('Error fetching trending movies:', error);
-      });
+        this.movies = [];
+        this.totalPages = 1;
+      }
+    });
   }
 
   get filteredMovies() {
     const query = this.searchQuery.trim().toLowerCase();
     let filtered = this.movies;
 
-    filtered = filtered.filter((m: any) => !m.genre_ids?.includes(10749));
+    // Filter out romance movies if needed
+    filtered = filtered.filter((m: any) => !m.genres?.includes('Romance'));
 
     if (!query) return filtered;
-    return filtered.filter((m: any) => (m.title || '').toLowerCase().includes(query));
+    return filtered.filter((m: any) => (m.title?.primary || '').toLowerCase().includes(query));
   }
 
   truncateDescription(text: string, wordLimit: number = 10): string {
@@ -97,16 +93,13 @@ export class TrendifyComponent implements OnInit {
   }
 
   toggleWishlist(movie: any) {
-    this.wishlist.toggle({
-      id: movie.id,
-      title: movie.title,
-      poster_path: movie.poster_path,
-      vote_average: movie.vote_average
-    });
+    if (movie && movie.tconst) {
+      this.wishlist.toggle(movie.tconst).subscribe();
+    }
   }
 
   isWishlisted(movie: any) {
-    return this.wishlist.isInWishlist(movie.id);
+    return movie && movie.tconst ? this.wishlist.isInWishlist(movie.tconst) : false;
   }
 
   onImageError(event: Event) {
@@ -123,7 +116,7 @@ export class TrendifyComponent implements OnInit {
       .trim();
   }
 
-  goToMovieDetails(movieId: number, title: string) {
+  goToMovieDetails(movieId: string, title: string) {
     const slug = this.createSlug(title);
     this.router.navigate(['/movie', movieId, slug]);
   }

@@ -32,13 +32,13 @@ export class Wishlist implements OnInit {
     } else {
       const query = this.searchQuery.toLowerCase();
       this.filteredItems = this.items.filter(item => 
-        item.title.toLowerCase().includes(query)
+        item.title.primary.toLowerCase().includes(query)
       );
     }
   }
 
-  remove(id: number) {
-    this.wishlist.remove(id);
+  remove(tconst: string) {
+    this.wishlist.remove(tconst).subscribe();
   }
 
   createSlug(title: string): string {
@@ -50,7 +50,7 @@ export class Wishlist implements OnInit {
       .trim();
   }
 
-  goToMovieDetails(movieId: number, title: string) {
+  goToMovieDetails(movieId: string, title: string) {
     const slug = this.createSlug(title);
     this.router.navigate(['/movie', movieId, slug]);
   }

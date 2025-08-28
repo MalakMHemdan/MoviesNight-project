@@ -12,27 +12,27 @@
   <h2>Now Playing :</h2>
 
   <div class="movie-list">
-    @for (movie of filteredMovies; track movie.id) {
+    @for (movie of filteredMovies; track movie.tconst) {
       <div class="movie-card">
-        
-        <div class="movie-link" (click)="goToMovieDetails(movie.id, movie.title)">
+
+        <div class="movie-link" (click)="goToMovieDetails(movie.tconst, movie.title.primary)">
           <div class="poster-wrap">
-            <img 
-              [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path : 'https://via.placeholder.com/500x750/1a1a1a/fbbf24?text=No+Image'" 
-              [alt]="movie.title"
+            <img
+              [src]="movie.poster ? 'http://localhost:5003/Images/' + movie.poster : 'https://via.placeholder.com/500x750/1a1a1a/fbbf24?text=No+Image'"
+              [alt]="movie.title.primary"
               (error)="onImageError($event)">
           </div>
           <div class="card-body">
-            <h3 class="movie-title">{{ movie.title }}</h3>
+            <h3 class="movie-title">{{ movie.title.primary }}</h3>
             <div class="card-actions">
-              <span class="rating">⭐ {{ movie.vote_average }}/10</span>
+              <span class="rating">⭐ {{ movie.rating?.percent || 0 }}</span>
             </div>
           </div>
         </div>
 
-        <button class="heart" 
-                (click)="toggleWishlist(movie)" 
-                [class.active]="isWishlisted(movie)" 
+        <button class="heart"
+                (click)="toggleWishlist(movie)"
+                [class.active]="isWishlisted(movie)"
                 aria-label="Toggle wishlist">
           <i [ngClass]="isWishlisted(movie) ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
         </button>
@@ -42,17 +42,17 @@
 
   <div class="pagination">
     <button class="btn" (click)="prevPage()" [disabled]="page === 1">Previous</button>
-    
+
     <div class="page-numbers">
       @for (pageNum of getPageNumbers(); track pageNum) {
-        <span class="page-number" 
+        <span class="page-number"
               [class.active]="pageNum === page"
               (click)="goToPage(pageNum)">
           {{ pageNum }}
         </span>
       }
     </div>
-    
+
     <button class="btn" (click)="nextPage()" [disabled]="page === totalPages">Next</button>
   </div>
 </div>

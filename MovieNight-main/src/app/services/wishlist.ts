@@ -1,61 +1,71 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export interface WishlistItem {
-  id: number;
-  title: string;
-  poster_path: string;
-  vote_average?: number;
+  tconst: string;
+  title: { primary: string };
+  poster?: string;
+  rating?: { percent: number };
 }
 
 @Injectable({ providedIn: 'root' })
 export class WishlistService {
-  private storageKey = 'wishlist_movies';
-  private wishlistSubject = new BehaviorSubject<WishlistItem[]>(this.loadFromStorage());
+  private baseUrl = 'http://localhost:5003/api/wishlist';
+  private wishlistSubject = new BehaviorSubject<WishlistItem[]>([]);
 
   wishlist$ = this.wishlistSubject.asObservable();
 
-  private loadFromStorage(): WishlistItem[] {
-    try {
-      const raw = localStorage.getItem(this.storageKey);
-      return raw ? JSON.parse(raw) : [];
-    } catch {
-      return [];
-    }
+  constructor(private http: HttpClient) {
+    this.loadWishlist();
   }
 
-  private saveToStorage(items: WishlistItem[]) {
-    try {
-      localStorage.setItem(this.storageKey, JSON.stringify(items));
-    } catch {}
+  // Load wishlist from backend
+  loadWishlist(): Observable<any> {
+    return this.http.get(this.baseUrl).pipe(
+      tap((response: any) => {
+        if (response.status === 'success') {
+          this.wishlistSubject.next(response.data.movies || []);
+        }
+      })
+    );
   }
 
+  // Get all wishlist items
   getAll(): WishlistItem[] {
     return this.wishlistSubject.value;
   }
 
-  isInWishlist(id: number): boolean {
-    return this.wishlistSubject.value.some(i => i.id === id);
+  // Check if movie is in wishlist
+  isInWishlist(tconst: string): boolean {
+    return this.wishlistSubject.value.some(item => item.tconst === tconst);
   }
 
-  add(item: WishlistItem) {
-    if (this.isInWishlist(item.id)) return;
-    const next = [...this.wishlistSubject.value, item];
-    this.wishlistSubject.next(next);
-    this.saveToStorage(next);
+  // Add movie to wishlist
+  add(tconst: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${tconst}`, {}).pipe(
+      tap(() => {
+        this.loadWishlist().subscribe();
+      })
+    );
   }
 
-  remove(id: number) {
-    const next = this.wishlistSubject.value.filter(i => i.id !== id);
-    this.wishlistSubject.next(next);
-    this.saveToStorage(next);
+  // Remove movie from wishlist
+  remove(tconst: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${tconst}`).pipe(
+      tap(() => {
+        this.loadWishlist().subscribe();
+      })
+    );
   }
 
-  toggle(item: WishlistItem) {
-    if (this.isInWishlist(item.id)) {
-      this.remove(item.id);
+  // Toggle movie in wishlist
+  toggle(tconst: string): Observable<any> {
+    if (this.isInWishlist(tconst)) {
+      return this.remove(tconst);
     } else {
-      this.add(item);
+      return this.add(tconst);
     }
   }
 } 

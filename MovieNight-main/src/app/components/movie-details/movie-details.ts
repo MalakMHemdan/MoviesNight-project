@@ -15,7 +15,7 @@ export class MovieDetails implements OnInit {
   movie: any = null;
   recommendations: any[] = [];
   loading = true;
-  movieId: number = 0;
+  movieId: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +26,7 @@ export class MovieDetails implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.movieId = +params['id'];
+      this.movieId = params['id'];
       const slug = params['slug'];
       if (this.movieId) {
         this.loadMovieDetails();
@@ -38,11 +38,11 @@ export class MovieDetails implements OnInit {
   loadMovieDetails() {
     this.loading = true;
     this.movieService.getMovieDetails(this.movieId).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         this.movie = data;
         this.loading = false;
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error fetching movie details:', error);
         this.loading = false;
       }
@@ -50,11 +50,12 @@ export class MovieDetails implements OnInit {
   }
 
   loadRecommendations() {
-    this.movieService.getMovieRecommendations(this.movieId).subscribe({
-      next: (data) => {
-        this.recommendations = data.results?.slice(0, 6) || [];
+    // For now, get similar movies by getting movies with high ratings
+    this.movieService.getRecommendedMovies().subscribe({
+      next: (data: any) => {
+        this.recommendations = data.items?.slice(0, 6) || [];
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error fetching recommendations:', error);
       }
     });
@@ -69,11 +70,11 @@ export class MovieDetails implements OnInit {
       .trim();
   }
 
-  goToMovieDetails(movieId: number) {
+  goToMovieDetails(movieId: string) {
     if (movieId) {
-      const movie = this.recommendations.find(m => m && m.id === movieId);
-      if (movie && movie.title) {
-        const slug = this.createSlug(movie.title);
+      const movie = this.recommendations.find(m => m && m.tconst === movieId);
+      if (movie && movie.title?.primary) {
+        const slug = this.createSlug(movie.title.primary);
         this.router.navigate(['/movie', movieId, slug]);
       } else {
         this.router.navigate(['/movie', movieId]);
@@ -86,18 +87,13 @@ export class MovieDetails implements OnInit {
   }
 
   toggleWishlist(movie: any) {
-    if (movie && movie.id) {
-      this.wishlist.toggle({ 
-        id: movie.id, 
-        title: movie.title, 
-        poster_path: movie.poster_path, 
-        vote_average: movie.vote_average 
-      });
+    if (movie && movie.tconst) {
+      this.wishlist.toggle(movie.tconst).subscribe();
     }
   }
 
   isWishlisted(movie: any) {
-    return movie && movie.id ? this.wishlist.isInWishlist(movie.id) : false;
+    return movie && movie.tconst ? this.wishlist.isInWishlist(movie.tconst) : false;
   }
 
 

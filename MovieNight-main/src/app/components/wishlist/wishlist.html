@@ -1,6 +1,6 @@
 <div class="wishlist pt-5">
   <h2>Wishlist :</h2>
-  
+
   <div class="search-section">
     <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="filterItems()" placeholder="Search wishlist..." class="search-input">
   </div>
@@ -22,20 +22,20 @@
 
   @if (filteredItems.length > 0) {
     <div class="grid">
-      @for (item of filteredItems; track item.id) {
+      @for (item of filteredItems; track item.tconst) {
         <div class="card">
-          <div class="movie-link" (click)="goToMovieDetails(item.id, item.title)">
-            <img 
-              [src]="item.poster_path ? 'https://image.tmdb.org/t/p/w300' + item.poster_path : 'https://via.placeholder.com/300x450/1a1a1a/fbbf24?text=No+Image'" 
-              [alt]="item.title" 
+          <div class="movie-link" (click)="goToMovieDetails(item.tconst, item.title.primary)">
+            <img
+              [src]="item.poster ? 'http://localhost:5003/Images/' + item.poster : 'https://via.placeholder.com/300x450/1a1a1a/fbbf24?text=No+Image'"
+              [alt]="item.title.primary"
               (error)="onImgError($event)">
-            
+
             <div class="info">
-              <h3>{{ item.title }}</h3>
-              <p class="muted">⭐ {{ item.vote_average }}/10</p>
+              <h3>{{ item.title.primary }}</h3>
+              <p class="muted">⭐ {{ item.rating?.percent || 0 }}</p>
             </div>
           </div>
-          <button class="btn-remove" (click)="remove(item.id)">Remove</button>
+          <button class="btn-remove" (click)="remove(item.tconst)">Remove</button>
         </div>
       }
     </div>

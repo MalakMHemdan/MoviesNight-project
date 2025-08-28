@@ -31,10 +31,14 @@ const MovieSchema = new mongoose.Schema({
   },
   links: {
     imdb: { type: String }
-  }
+  },
+
+  
+  poster: { type: String } 
+
 }, { timestamps: true });
 
-// helpful compound/text indexes
+
 MovieSchema.index({ 'title.primary': 'text' });
 MovieSchema.index({ 'crew.directors.name': 1 });
 MovieSchema.index({ 'crew.actors.name': 1 });

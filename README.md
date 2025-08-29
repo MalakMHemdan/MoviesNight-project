@@ -22,6 +22,4 @@ This project was developed collaboratively with my amazing team, where we used *
 [MoviesNight-project](https://github.com/MalakMHemdan/MoviesNight-project)
 
 🔗 **Postman Collection:**
-[API Collection]([https://web.postman.co/workspace/My-Workspace~1a5b7930-6ea0-4ff0-8943-c71d8b3b6355/collection/47835310-2602e6f4-bbaf-475a-95b1-01b85c228c00?action=share&source=copy-link&creator=47835310](https://www.postman.com/aishafathy647/workspace/pojects/collection/47835310-2602e6f4-bbaf-475a-95b1-01b85c228c00?action=share&creator=47835310))
-
-
+[API Collection](https://www.postman.com/aishafathy647/workspace/pojects/collection/47835310-2602e6f4-bbaf-475a-95b1-01b85c228c00?action=share&creator=47835310)

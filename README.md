@@ -23,4 +23,4 @@ Mean-Stack-Movies-main folder is Frontend
 
 # Teamwork:
 
-This project was developed collaboratively with my tea
+This project was developed collaboratively with my team

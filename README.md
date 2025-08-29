@@ -19,7 +19,7 @@ https://.postman.co/workspace/My-Workspace~1a5b7930-6ea0-4ff0-8943-c71d8b3b6355/
 # Project details:
 
 Movies-main folder is Backend
-Mean-Stack-Movies-main folder is Frontend
+MovieNight-main folder is Frontend
 
 # Teamwork:
 

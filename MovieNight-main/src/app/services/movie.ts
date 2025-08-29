@@ -33,7 +33,8 @@ export class MovieService {
 
   // Get recommended movies (high rated movies)
   getRecommendedMovies(): Observable<any> {
-    return this.getMovies({ page: 1, sort: 'rating_desc', minRating: 80 });
+    // Dataset ratings are 0–10, so use 8 as a high-rating threshold
+    return this.getMovies({ page: 1, sort: 'rating_desc', minRating: 8 });
   }
 
   // Get movie details by IMDb ID

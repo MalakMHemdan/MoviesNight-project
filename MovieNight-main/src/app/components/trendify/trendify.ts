@@ -26,11 +26,17 @@ export class TrendifyComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadTrendingMovies();
+    this.loadMovies();
   }
 
-  loadTrendingMovies(page: number = this.page) {
-    this.movieService.getTrendingMovies(page).subscribe({
+  // Load movies from backend with server-side search + pagination
+  loadMovies(page: number = this.page) {
+    const params: any = { page, sort: 'rating_desc' };
+    if (this.searchQuery.trim()) {
+      params.q = this.searchQuery.trim();
+    }
+
+    this.movieService.getMovies(params).subscribe({
       next: (data) => {
         this.movies = data?.items || [];
         this.totalPages = data?.totalPages || 1;
@@ -44,15 +50,10 @@ export class TrendifyComponent implements OnInit {
     });
   }
 
-  get filteredMovies() {
-    const query = this.searchQuery.trim().toLowerCase();
-    let filtered = this.movies;
-
-    // Filter out romance movies if needed
-    filtered = filtered.filter((m: any) => !m.genres?.includes('Romance'));
-
-    if (!query) return filtered;
-    return filtered.filter((m: any) => (m.title?.primary || '').toLowerCase().includes(query));
+  onSearchChange() {
+    // Reset to first page and fetch with query so search works across all pages
+    this.page = 1;
+    this.loadMovies(1);
   }
 
   truncateDescription(text: string, wordLimit: number = 10): string {
@@ -63,16 +64,16 @@ export class TrendifyComponent implements OnInit {
   }
 
   prevPage() {
-    if (this.page > 1) this.loadTrendingMovies(this.page - 1);
+    if (this.page > 1) this.loadMovies(this.page - 1);
   }
 
   nextPage() {
-    if (this.page < this.totalPages) this.loadTrendingMovies(this.page + 1);
+    if (this.page < this.totalPages) this.loadMovies(this.page + 1);
   }
 
   goToPage(pageNum: number) {
     if (pageNum >= 1 && pageNum <= this.totalPages) {
-      this.loadTrendingMovies(pageNum);
+      this.loadMovies(pageNum);
     }
   }
 

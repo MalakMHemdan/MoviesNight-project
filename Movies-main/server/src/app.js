@@ -16,7 +16,6 @@ async function bootstrap() {
 
   const app = express();
 
-  // ✅ هنا خلي الصور تتسرف من فولدر Images
 app.use('/Images', express.static(path.join(__dirname, 'Images')));
 
   console.log("Serving Images from:", path.join(__dirname, 'src', 'Images'));

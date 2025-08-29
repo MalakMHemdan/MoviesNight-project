@@ -3,7 +3,7 @@
     <h1>Welcome to Our Movie App</h1>
     <p class="subtitle">Millions of movies, TV shows and people to discover</p>
     <div class="search">
-      <input type="text" [(ngModel)]="searchQuery" placeholder="Search movies..." />
+      <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Search movies..." />
     </div>
   </div>
 </section>
@@ -12,7 +12,7 @@
   <h2>Now Playing :</h2>
 
   <div class="movie-list">
-    @for (movie of filteredMovies; track movie.tconst) {
+    @for (movie of movies; track movie.tconst) {
       <div class="movie-card">
 
         <div class="movie-link" (click)="goToMovieDetails(movie.tconst, movie.title.primary)">
